@@ -6,12 +6,35 @@ const intervalTime = 60 * 1000;
 let viewCount = 0;
 const app = express();
 console.log(`Viewcount: ${viewCount}`);
-app.post("/view", (req, res) => {
+app.post("/add-view", (req, res) => {
   viewCount += 1;
   console.log(`Viewcount: ${viewCount}`);
   res.json({
     message: "Thank you for visiting my site",
   });
+});
+
+app.delete("/reset-view-count", (req, res) => {
+  const password = req.body.password;
+
+  if (!password) {
+    res.json({
+      message: "No password provided",
+    });
+  }
+
+  if (password === "reset-view-count-password") {
+    viewCount = 0;
+    console.log("Viewcount has been reset");
+    console.log(`Viewcount: ${viewCount}`);
+    res.json({
+      message: "Viewcount has been reset",
+    });
+  } else {
+    res.json({
+      message: "Wrong password",
+    });
+  }
 });
 
 setInterval(() => {

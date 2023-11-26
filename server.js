@@ -13,8 +13,9 @@ app.post("/add-view", (req, res) => {
     message: "Thank you for visiting my site",
   });
 });
-
+/*
 app.delete("/reset-view-count", (req, res) => {
+  console.log(req.body);
   const password = req.body.password;
 
   if (!password) {
@@ -36,6 +37,7 @@ app.delete("/reset-view-count", (req, res) => {
     });
   }
 });
+*/
 
 setInterval(() => {
   console.log(`Viewcount: ${viewCount}`);

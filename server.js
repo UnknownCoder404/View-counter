@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const http = require("http");
 
-const intervalTime = 60 * 1000;
+const intervalTime = 3600 * 1000; // 3600 seconds
 let viewCount = 0;
 const app = express();
 console.log(`Viewcount: ${viewCount}`);

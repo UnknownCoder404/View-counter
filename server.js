@@ -1,45 +1,24 @@
 require("dotenv").config();
 const express = require("express");
 const http = require("http");
-
+let { LocalStorage } = require("node-localstorage");
+localStorage = new LocalStorage("./localstorage");
+let viewCount = Number(localStorage.getItem("viewCount")) || 0;
+saveToLocal();
 const intervalTime = 3600 * 1000; // 3600 seconds
-let viewCount = 0;
 const app = express();
 console.log(`Viewcount: ${viewCount}`);
 app.post("/add-view", (req, res) => {
   viewCount += 1;
   console.log(`Viewcount: ${viewCount}`);
+  saveToLocal();
   res.json({
     message: "Thank you for visiting my site",
   });
 });
-/*
-app.delete("/reset-view-count", (req, res) => {
-  console.log(req.body);
-  const password = req.body.password;
-
-  if (!password) {
-    res.json({
-      message: "No password provided",
-    });
-  }
-
-  if (password === "reset-view-count-password") {
-    viewCount = 0;
-    console.log("Viewcount has been reset");
-    console.log(`Viewcount: ${viewCount}`);
-    res.json({
-      message: "Viewcount has been reset",
-    });
-  } else {
-    res.json({
-      message: "Wrong password",
-    });
-  }
-});
-*/
 
 setInterval(() => {
+  loadToLocal();
   console.log(`Viewcount: ${viewCount}`);
 }, intervalTime);
 const server = http.createServer(app);
@@ -49,3 +28,10 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
 });
+
+function saveToLocal() {
+  localStorage.setItem("viewCount", viewCount);
+}
+function loadToLocal() {
+  localStorage = Number(localStorage.getItem("viewCount"));
+}

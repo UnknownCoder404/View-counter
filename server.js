@@ -8,7 +8,7 @@ const cors = require("cors");
 
 // CORS
 const corsOptions = {
-  origin: ["http://localhost:3500", "https://odvjetnik.josip.cicek.hr"],
+  origin: ["http://localhost:5500", "https://odvjetnik.josip.cicek.hr"],
   methods: ["POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,

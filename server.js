@@ -86,6 +86,11 @@ cron.schedule("0 * * * *", async () => {
   }
 });
 
+app.post("/-restart-server", (req, res) => {
+  console.log("Server restarted.");
+  res.status(200).json({ message: "Server restarted" });
+});
+
 // Start the server on the port from the .env file
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

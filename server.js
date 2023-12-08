@@ -86,7 +86,7 @@ cron.schedule("0 * * * *", async () => {
   }
 });
 
-app.post("/-restart-server", (req, res) => {
+app.post("/restart-server", (req, res) => {
   console.log("Server restarted.");
   res.status(200).json({ message: "Server restarted" });
 });

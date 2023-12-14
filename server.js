@@ -46,14 +46,16 @@ const items = [
   "email",
   "view",
 ];
-
-items.forEach(async (item) => {
-  let tempLog = await Log.findOne({ item });
-  if (!tempLog) {
-    tempLog = new Log({ item, count: 0 });
-  }
-  console.log(`Current state of ${item}: ${tempLog.count}`);
-});
+async function logAllItems() {
+  items.forEach(async (item) => {
+    let tempLog = await Log.findOne({ item });
+    if (!tempLog) {
+      tempLog = new Log({ item, count: 0 });
+    }
+    console.log(`Current state of ${item}: ${tempLog.count}`);
+  });
+}
+logAllItems();
 // Create a dynamic route for each item
 items.forEach((item) => {
   router.post(`/add-log/${item}`, async (req, res) => {
@@ -67,13 +69,16 @@ items.forEach((item) => {
     await log.save();
     // Send a response
     console.log(`Added a log for ${item}. Count is now ${log.count}.`);
-    res.send(`Added a log for ${item}. Count is now ${log.count}.`);
+    res.status(200).json({
+      message: `Added a log for ${item}. Count is now ${log.count}.`,
+    });
   });
 });
 app.post("/restart-server", (req, res) => {
   console.log("Server restarted.");
   res.status(200).json({ message: "Server restarted" });
 });
+setInterval(logAllItems, 3600000);
 const PORT = process.env.PORT || 3000;
 app.use(router);
 app.listen(PORT, () => {
